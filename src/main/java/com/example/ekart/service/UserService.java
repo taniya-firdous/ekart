@@ -5,41 +5,40 @@ import org.springframework.stereotype.Service;
 
 import com.example.ekart.model.User;
 import com.example.ekart.repository.UserRepository;
+import com.example.ekart.security.JwtUtil;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
+    private final JwtUtil jwtUtil;
 
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder encoder) {
+    public UserService(UserRepository userRepository,
+                       BCryptPasswordEncoder encoder,
+                       JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.encoder = encoder;
+        this.jwtUtil = jwtUtil;
     }
 
     public void register(User user) {
-    
         user.setPassword(encoder.encode(user.getPassword()));
         user.setRole("USER");
-
         userRepository.insertUser(user);
-
     }
-    public String login(User user) {
 
-        User dbUser = userRepository.findByEmail(user.getEmail());
+    public String login(String email, String password) {
+        User user = userRepository.findByEmail(email);
 
-        if (dbUser == null) {
-            return "User not found";
+        if (user == null) {
+            throw new RuntimeException("User not found");
         }
 
-        // compare hashed password
-        boolean match = encoder.matches(user.getPassword(), dbUser.getPassword());
-
-        if (!match) {
-            return "Invalid password";
+        if (!encoder.matches(password, user.getPassword())) {
+            throw new RuntimeException("Invalid password");
         }
 
-        return "Login successful";
+        return jwtUtil.generateToken(email);
     }
 }

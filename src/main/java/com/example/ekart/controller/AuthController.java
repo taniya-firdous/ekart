@@ -1,16 +1,21 @@
 package com.example.ekart.controller;
 
-import org.springframework.http.ResponseEntity;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ekart.dto.LoginRequest;
 import com.example.ekart.model.User;
 import com.example.ekart.service.UserService;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "*") // for frontend later
 public class AuthController {
 
     private final UserService userService;
@@ -20,14 +25,23 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-       public Object register(@RequestBody User user) {
+    public Map<String, String> register(@RequestBody User user) {
         userService.register(user);
-        return ResponseEntity.ok("User registered successfully"); 
-       }
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "User registered successfully");
+
+        return response;
+    }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
-        String response = userService.login(user);
-        return ResponseEntity.ok(response);
+    public Map<String, String> login(@RequestBody LoginRequest request) {
+
+        String token = userService.login(request.getEmail(), request.getPassword());
+
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+
+        return response;
     }
 }
