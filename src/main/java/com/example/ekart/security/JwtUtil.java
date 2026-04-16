@@ -22,10 +22,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String extractEmail(String token) {
-        Claims claims = extractAllClaims(token);
-        return claims.getSubject();
-    }
+    
 
     public boolean validateToken(String token, String email) {
         return extractEmail(token).equals(email) && !isTokenExpired(token);
@@ -41,4 +38,12 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody();
     }
+    public String extractEmail(String token) {
+    return Jwts.parserBuilder()
+            .setSigningKey(SECRET_KEY)
+            .build()
+            .parseClaimsJws(token)
+            .getBody()
+            .getSubject();
+}
 }
