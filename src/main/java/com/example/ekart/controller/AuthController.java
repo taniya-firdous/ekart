@@ -3,7 +3,6 @@ package com.example.ekart.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +15,6 @@ import com.example.ekart.service.UserService;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*") // for frontend later
 public class AuthController {
 
     private final UserService userService;
@@ -46,7 +44,7 @@ public class AuthController {
         return response;
     }
     @GetMapping("/profile")
-public String getProfile() {
-    return "This is a protected user profile";
-}
+    public String getProfile() {
+        return "This is a protected user profile";
+    }
 }

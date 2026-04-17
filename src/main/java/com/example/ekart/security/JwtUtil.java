@@ -39,11 +39,7 @@ public class JwtUtil {
                 .getBody();
     }
     public String extractEmail(String token) {
-    return Jwts.parserBuilder()
-            .setSigningKey(SECRET_KEY)
-            .build()
-            .parseClaimsJws(token)
-            .getBody()
-            .getSubject();
-}
+        Claims claims = extractAllClaims(token);
+        return claims.getSubject();
+    }
 }
