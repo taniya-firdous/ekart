@@ -10,6 +10,7 @@ public class SecurityConfig {
 
         http
             .csrf(csrf -> csrf.disable())
+            .cors(cors -> {}) 
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
                 .anyRequest().authenticated()

@@ -23,10 +23,14 @@ public class UserService {
     }
 
     public void register(User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
-        user.setRole("USER");
-        userRepository.insertUser(user);
-    }
+        try {
+            user.setPassword(encoder.encode(user.getPassword()));
+            user.setRole("USER");
+            userRepository.insertUser(user);
+        } catch (Exception e) {
+            throw new RuntimeException("Email already exists");
+        }
+}
 
     public String login(String email, String password) {
         User user = userRepository.findByEmail(email);
