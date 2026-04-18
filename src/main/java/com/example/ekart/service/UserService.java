@@ -2,6 +2,7 @@ package com.example.ekart.service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ekart.model.User;
 import com.example.ekart.repository.UserRepository;
@@ -21,18 +22,31 @@ public class UserService {
         this.encoder = encoder;
         this.jwtUtil = jwtUtil;
     }
-
+    @Transactional
     public void register(User user) {
-        try {
-            user.setPassword(encoder.encode(user.getPassword()));
-            user.setRole("USER");
-            userRepository.insertUser(user);
-        } catch (Exception e) {
+
+        System.out.println("EMAIL: " + user.getEmail());
+
+        User existing = userRepository.findByEmail(user.getEmail());
+
+        System.out.println("FOUND USER: " + existing);
+
+        if (existing != null) {
             throw new RuntimeException("Email already exists");
         }
-}
 
+        System.out.println("GOING TO INSERT");
+
+        user.setPassword(encoder.encode(user.getPassword()));
+        user.setRole("USER");
+
+        userRepository.insertUser(user);
+
+        System.out.println("INSERT DONE");
+}
+    // ✅ LOGIN
     public String login(String email, String password) {
+
         User user = userRepository.findByEmail(email);
 
         if (user == null) {
