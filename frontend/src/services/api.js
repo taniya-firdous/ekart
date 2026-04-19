@@ -31,3 +31,19 @@ export const registerUser = async (userData) => {
 
   return response.text();
 };
+
+export const getToken = () => {
+  return localStorage.getItem("token");
+};
+export const authFetch = async (url, options = {}) => {
+  const token = localStorage.getItem("token");
+
+  return fetch(url, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+      ...options.headers
+    }
+  });
+};
