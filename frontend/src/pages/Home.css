@@ -1,0 +1,30 @@
+.banner {
+  background-color: #f1f3f6;
+  padding: 30px;
+  text-align: center;
+}
+.menu-bar {
+  display: flex;
+  gap: 20px;
+  padding: 10px 20px;
+  background-color: #112448;
+  color: white;
+  font-size: 14px;
+}
+.home {
+  padding: 20px;
+  background-color: #f1f3f6;
+  min-height: 100vh;
+}
+
+.home-title {
+  margin-bottom: 20px;
+}
+
+/* GRID */
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
