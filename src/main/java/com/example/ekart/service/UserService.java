@@ -44,7 +44,7 @@ public class UserService {
 
         System.out.println("INSERT DONE");
 }
-    // ✅ LOGIN
+    
     public String login(String email, String password) {
 
         User user = userRepository.findByEmail(email);
@@ -56,7 +56,7 @@ public class UserService {
         if (!encoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
-
+        userRepository.updateLastLogin(email);
         return jwtUtil.generateToken(email);
     }
 }

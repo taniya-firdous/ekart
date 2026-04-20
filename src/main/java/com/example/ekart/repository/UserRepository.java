@@ -8,4 +8,5 @@ import com.example.ekart.model.User;
 public interface UserRepository {
     void insertUser(User user);
     User findByEmail(String email);
+    void updateLastLogin(String email);
 }
