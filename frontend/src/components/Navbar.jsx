@@ -105,7 +105,11 @@ function Navbar() {
           </div>
         )}
 
-        <div className="nav-item">Cart 🛒</div>
+        <div
+            className="nav-item"
+            onClick={() => navigate("/cart")}
+            >Cart 🛒 
+        </div>
       </div>
 
     </div>

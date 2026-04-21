@@ -1,41 +1,25 @@
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import ProductCard from "../components/ProductCard"; // ✅ important
 import "./Home.css";
-
+import { useNavigate } from "react-router-dom";
 function Home() {
+  const [products, setProducts] = useState([]);
 
-  const products = [
-    {
-      id: 1,
-      name: "iPhone 15",
-      price: 79999,
-      image: "https://via.placeholder.com/200"
-    },
-    {
-      id: 2,
-      name: "Laptop",
-      price: 55999,
-      image: "https://via.placeholder.com/200"
-    },
-    {
-      id: 3,
-      name: "Headphones",
-      price: 2999,
-      image: "https://via.placeholder.com/200"
-    },
-    {
-      id: 4,
-      name: "Shoes",
-      price: 1999,
-      image: "https://via.placeholder.com/200"
-    }
-  ];
-
+  useEffect(() => {
+    fetch("http://localhost:8081/api/products")
+      .then(res => res.json())
+      .then(data => {
+        console.log("Products:", data); // debug
+        setProducts(data);
+      })
+      .catch(err => console.error(err));
+  }, []);
+  const navigate = useNavigate();
   return (
     <div>
       <Navbar />
 
-      {/* MENU BAR */}
+      {/* Menu Bar */}
       <div className="menu-bar">
         <span>All</span>
         <span>Electronics</span>
@@ -44,23 +28,27 @@ function Home() {
         <span>Appliances</span>
       </div>
 
-      {/* BANNER */}
+      {/* Banner */}
       <div className="banner">
         <h2>Welcome to eKart</h2>
         <p>Best deals available here</p>
       </div>
 
-      {/* PRODUCT GRID */}
-      <div className="home">
-        <h2 className="home-title">Top Deals</h2>
-
-        <div className="product-grid">
-          {products.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
+      {/* Products Grid */}
+      <div className="products-container">
+        {products.length === 0 ? (
+          <p style={{ padding: "20px" }}>No products available</p>
+        ) : (
+          products.map((p) => (
+            <div key={p.id} className="product-card" onClick={() => navigate(`/product/${p.id}`)}>
+              <img src={p.image} alt={p.name} />
+              <h3>{p.name}</h3>
+              <p className="price">₹{p.price}</p>
+              <button className="btn-primary">Add to Cart</button>
+            </div>
+          ))
+        )}
       </div>
-
     </div>
   );
 }

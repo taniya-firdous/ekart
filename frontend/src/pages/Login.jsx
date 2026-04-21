@@ -1,27 +1,31 @@
 import { useState } from "react";
 import { loginUser } from "../services/api";
 import { useNavigate } from "react-router-dom";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const handleSubmit = async (e) => {
+
+    const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-        const data = await loginUser(email, password);
+      const data = await loginUser(email, password);
 
-        localStorage.setItem("token", data.token);
+      // ✅ FIX: store both token and user
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
-        alert("Login successful");
+      alert("Login successful");
 
-        navigate("/home");
+      navigate("/home");
 
     } catch (error) {
-        console.error(error);
-        alert(error.message);
+      console.error(error);
+      alert(error.message);
     }
-    };
+  };
 
   return (
     <div className="page-container">
@@ -45,11 +49,11 @@ function Login() {
         />
 
         <button type="submit" className="btn-primary">
-                Login
+          Login
         </button>
 
         <p>
-        Don't have an account? <a href="/register">Register</a>
+          Don't have an account? <a href="/register">Register</a>
         </p>
       </form>
     </div>

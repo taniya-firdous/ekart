@@ -12,3 +12,76 @@ ADD COLUMN created_at DATETIME DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE users 
 ADD COLUMN last_login DATETIME;
 
+
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    price DOUBLE NOT NULL,
+    category VARCHAR(100),
+    brand VARCHAR(100),
+    rating DOUBLE DEFAULT 0,
+    quantity INT DEFAULT 0,
+    image VARCHAR(500),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    total_amount DOUBLE,
+    status VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE order_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    price DOUBLE,
+
+    FOREIGN KEY (order_id) REFERENCES orders(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+CREATE TABLE cart (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+for now only 
+INSERT INTO products (name, description, price, category, brand, rating, quantity, image) VALUES
+
+-- Electronics
+('iPhone 15', 'Latest Apple smartphone', 79999, 'Electronics', 'Apple', 4.5, 10, 'https://via.placeholder.com/200'),
+('Samsung TV', '50 inch Smart TV', 45999, 'Electronics', 'Samsung', 4.3, 8, 'https://via.placeholder.com/200'),
+('Dell Laptop', 'Gaming laptop', 65999, 'Electronics', 'Dell', 4.4, 5, 'https://via.placeholder.com/200'),
+
+-- Fashion
+('Nike Shoes', 'Running shoes', 2999, 'Fashion', 'Nike', 4.2, 20, 'https://via.placeholder.com/200'),
+('Levis Jeans', 'Slim fit jeans', 1999, 'Fashion', 'Levis', 4.1, 15, 'https://via.placeholder.com/200'),
+
+-- Home
+('Sofa Set', 'Comfortable 3-seater sofa', 15999, 'Home', 'Urban Ladder', 4.3, 3, 'https://via.placeholder.com/200'),
+('Dining Table', 'Wooden dining table', 8999, 'Home', 'IKEA', 4.0, 4, 'https://via.placeholder.com/200'),
+
+-- Appliances
+('Refrigerator', 'Double door fridge', 25999, 'Appliances', 'LG', 4.5, 6, 'https://via.placeholder.com/200'),
+('Washing Machine', 'Fully automatic', 18999, 'Appliances', 'Whirlpool', 4.2, 7, 'https://via.placeholder.com/200'),
+
+-- Beauty
+('Face Wash', 'Skin care product', 299, 'Beauty', 'Nivea', 4.1, 30, 'https://via.placeholder.com/200'),
+('Perfume', 'Long lasting fragrance', 1499, 'Beauty', 'Wild Stone', 4.0, 25, 'https://via.placeholder.com/200'),
+
+-- Books
+('Java Programming', 'Learn Java', 499, 'Books', 'Oracle Press', 4.5, 10, 'https://via.placeholder.com/200'),
+('React Guide', 'Frontend development', 399, 'Books', 'Tech Books', 4.3, 12, 'https://via.placeholder.com/200');
+
+
