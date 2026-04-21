@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.ekart.repository.ProductRepository">
+
+    <insert id="insertProduct" parameterType="com.example.ekart.model.Product">
+        INSERT INTO products
+        (name, description, price, category, brand, rating, quantity, image)
+        VALUES
+        (#{name}, #{description}, #{price}, #{category}, #{brand}, #{rating}, #{quantity}, #{image})
+    </insert>
+
+    <select id="getAllProducts" resultType="com.example.ekart.model.Product">
+        SELECT * FROM products
+    </select>
+
+</mapper>

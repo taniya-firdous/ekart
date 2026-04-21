@@ -1,0 +1,26 @@
+.address-container {
+  max-width: 500px;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.address-container input,
+.address-container textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.address-container textarea {
+  min-height: 80px;
+}
+
+.save-btn {
+  background-color: #0a1e3e;
+  color: white;
+  padding: 12px;
+  border: none;
+  cursor: pointer;
+}

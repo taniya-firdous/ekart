@@ -1,0 +1,21 @@
+/* Full page container */
+.page-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background-color);
+}
+
+/* Card container (center box) */
+
+.card {
+  background-color: var(--white);
+  padding: 40px;
+  border-radius: var(--radius-large);
+  box-shadow: var(--card-shadow);
+  width: 350px;
+
+  display: flex;
+  flex-direction: column;
+}

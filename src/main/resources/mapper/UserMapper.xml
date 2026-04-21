@@ -13,5 +13,11 @@
     <select id="findByEmail" resultType="com.example.ekart.model.User">
         SELECT * FROM users WHERE email = #{email}
     </select>
+    
+    <update id="updateLastLogin">
+    UPDATE users 
+    SET last_login = NOW()
+    WHERE email = #{email}
+    </update>
 
 </mapper>
